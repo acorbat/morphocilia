@@ -1,0 +1,35 @@
+[project]
+name = "morphocilia"
+description = "Package for cilia segmentation and morphological description, and bile duct and canaliculi regionalization during development of liver thick sections."
+authors = [
+  {name = "A. Corbat", email = "acorbat@ki.se"},
+  {name = "E. del Mar Sosa Osorio", email = "estela.del.mar.sosa.osorio@stud.ki.se"}
+]
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.6"
+keywords = ["cilia", "liver"]
+maintainers = [
+  {name = "A. Corbat", email = "agustin.corbat@gmail.com"},
+  {name = "E. del Mar Sosa Osorio", email = "estela.del.mar.sosa.osorio@stud.ki.se"}
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Scientific Community"
+]
+dynamic = ["dependencies", "optional-dependencies", "version"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["morphocilia"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements.txt"}
+optional-dependencies.test = {file = "requirements.test.txt"}
+
+[build-system]
+requires = ["setuptools", "wheel", "setuptools_scm[toml]"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "morphocilia/_version.py"

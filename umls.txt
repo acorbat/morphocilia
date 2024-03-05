@@ -1,0 +1,77 @@
+@startuml
+json Image {
+"channels":["cilia", "CD13", "Otoferlin"]
+}
+
+package "Cilia Analysis" {
+
+component "Cilia Segmenter" as cilia_segmenter {
+portin cilia_channel
+}
+
+[Cilia Classifier] as cilia_classifier
+[Cilia Quantification] as cilia_quantification
+
+json CiliaTable {
+"position":"centroid",
+"length":"um",
+"elipsity":"ratio"
+}
+
+json AddToCiliaTable {
+"cilia type":["looped", "straight", "etc"],
+"belongs to region": ["bile_duct", "hybrid", "fibroblast"]
+}
+
+}
+
+package "Lumina Segmentation" {
+component "Lumina Segmentation" as lumina_segmenter {
+portin "cd13 channel" as cd13_lumen
+portin "otoferlin channel" as oto_lumen
+}
+
+[Lumina Quantification] as lumina_quantification
+
+json LuminaTable {
+"width": "um",
+"lenght": "um",
+"% CD13": "%",
+"% Oto": "%"
+}
+
+[Lumen Classification] as lumen_classifier
+
+}
+
+package "Region Map" {
+component "Marker Segmentation" as marker_segmentation {
+portin "cd13 channel" as cd13_marker
+portin "otoferlin channel" as oto_marker
+
+[CD13 Segmentation]
+[Otoferlin Segmentation]
+}
+
+node "map.tiff" as output_map
+
+}
+
+Image --> cilia_channel
+Image --> oto_lumen
+Image --> cd13_lumen
+Image --> oto_marker
+Image --> cd13_marker
+
+cilia_segmenter --> cilia_quantification
+cilia_quantification --> CiliaTable
+CiliaTable --> cilia_classifier
+cilia_classifier --> AddToCiliaTable
+
+lumina_segmenter --> lumina_quantification
+lumina_quantification --> LuminaTable
+marker_segmentation -> LuminaTable
+LuminaTable --> lumen_classifier
+lumen_classifier --> output_map
+output_map -> AddToCiliaTable
+@enduml

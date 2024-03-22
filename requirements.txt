@@ -1,0 +1,3 @@
+aicsimageio
+readlif @ git+https://github.com/acorbat/readlif
+napari[all]

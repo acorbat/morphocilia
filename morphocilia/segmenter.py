@@ -51,3 +51,15 @@ def segment_lumina(lumina_channel: np.ndarray) -> np.ndarray:
     lumina_mask = binary_closing(lumina_mask, footprint=ball(radius=5))
     lumina_mask = binary_opening(lumina_mask, footprint=ball(radius=1))
     return lumina_mask
+
+
+def get_region_map(cd13_mask: np.ndarray, opn_mask: np.ndarray) -> np.ndarray:
+    """Make the region map from the CD13+ and OPN+ segmentations"""
+    expanded_cd13_mask = binary_dilation(
+        cd13_mask, footprint=[(ball(radius=10)[::2], 2)]
+    )
+    expanded_opn_mask = binary_dilation(
+        opn_mask, footprint=[(ball(radius=10)[::2], 2)]
+    )
+
+    return expanded_cd13_mask + 2 * expanded_opn_mask

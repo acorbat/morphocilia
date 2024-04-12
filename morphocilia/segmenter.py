@@ -1,3 +1,14 @@
+from apoc import PixelClassifier
+import numpy as np
+from skimage.morphology import (
+    binary_dilation,
+    binary_erosion,
+    remove_small_objects,
+    label,
+)
+from skimage.measure import label
+
+
 def cilia_segmenter(cilia_channel):
     segmenter = PixelClassifier(
         opencl_filename="D:/estela/results/20240304/PixelClassifier_2.cl"
@@ -20,5 +31,6 @@ def cilia_segmenter_cleaner(cilia_channel):
         "D:/estela/results/20240304/PixelClassifier_2.cl"
     )
     clean_cilia = cilia_cleaner(prediction)
+    labelled_prediction = label(clean_cilia)
 
-    return clean_cilia
+    return labelled_prediction

@@ -10,6 +10,14 @@ from skimage.measure import label
 
 
 def cilia_segmenter(cilia_channel):
+    """
+    This function segments the cilia channel of a lifimage. It returns an ndarray.
+    Parameters:
+    path: path
+        Path where the .lif file is found.
+    index: integer
+        Indicates the image to be later opened from the experiment file (starting from 0).
+    """
     segmenter = PixelClassifier(
         opencl_filename="D:/estela/results/20240304/PixelClassifier_2.cl"
     )

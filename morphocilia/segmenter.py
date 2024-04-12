@@ -27,9 +27,7 @@ def cilia_cleaner(segmentation):
 
 
 def cilia_segmenter_cleaner(cilia_channel):
-    prediction = cilia_segmenter(
-        "D:/estela/results/20240304/PixelClassifier_2.cl"
-    )
+    prediction = cilia_segmenter(cilia_channel)
     clean_cilia = cilia_cleaner(prediction)
     labelled_prediction = label(clean_cilia)
 

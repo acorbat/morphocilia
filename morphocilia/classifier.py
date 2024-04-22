@@ -64,3 +64,14 @@ def scaler_classifier_2(df):
         X[["scaled_solidity", "scaled_axis_minor_length"]]
     )
     return X
+
+
+def scale_columns(X, sca="scaler_3"):
+    """"""
+    scaler = joblib.load(f"D:/estela/results/20240410/{sca}.sca")
+    return scaler.transform(X)
+
+
+df[["scaled_solidity", "scaled_axis_minor_length"]] = scaler(
+    df[["solidity", "axis_minor_length"]]
+)

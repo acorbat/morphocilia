@@ -10,7 +10,7 @@ def scale_columns(X, sca="scaler_3"):
     return scaler.transform(X)
 
 
-def classify_cilia(scaled_X, ml="cilia_classifier_3"):
+def classify_cilia(scaled_X, ml="cilia_classifier_4"):
     """
     Classifies cilia from a dataframe based on previously scaled "solidity" and "axis_minor_length".
     """
@@ -18,7 +18,7 @@ def classify_cilia(scaled_X, ml="cilia_classifier_3"):
     return cilia_classifier.predict(scaled_X)
 
 
-def scale_classify_cilia(X, sca="scaler_3", ml="cilia_classifier_3"):
+def scale_classify_cilia(X, sca="scaler_3", ml="cilia_classifier_4"):
     scaler = joblib.load(f"D:/estela/results/20240410/{sca}.sca")
     cilia_classifier = joblib.load(f"D:/estela/results/20240410/{ml}.ml")
     return cilia_classifier.predict(scaler.transform(X))

@@ -1,11 +1,11 @@
-import numpy as np
 import pandas as pd
 from skimage.measure import regionprops_table
 
 
 def cilia_props_table(label, cilia_channel):
     """
-    Extracts selected properties from a cilia-channel image and its label. Returns a pandas dataframe.
+    Extracts selected properties from a cilia-channel image
+    and its label. Returns a pandas dataframe.
     """
     props = regionprops_table(
         label,

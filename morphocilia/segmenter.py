@@ -6,12 +6,12 @@ from skimage.morphology import (
     remove_small_objects,
     label,
 )
-from skimage.measure import label
 
 
 def cilia_segmenter(cilia_channel):
     """
-    Segments the cilia channel of a lifimage. The segmenter is previously trained with apoc.
+    Segments the cilia channel of a lifimage. The segmenter
+    is previously trained with apoc.
     """
     segmenter = PixelClassifier(
         opencl_filename="D:/estela/results/20240304/PixelClassifier_2.cl"
@@ -34,7 +34,8 @@ def cilia_cleaner(segmentation):
 
 def cilia_segmenter_cleaner(cilia_channel):
     """
-    Segments and polishes the segmentation of the cilia channel. Returns a label.
+    Segments and polishes the segmentation of the cilia channel.
+    Returns a label.
     """
     prediction = cilia_segmenter(cilia_channel)
     clean_cilia = cilia_cleaner(prediction)

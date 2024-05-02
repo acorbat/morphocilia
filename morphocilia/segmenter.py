@@ -6,6 +6,9 @@ from skimage.morphology import (
     remove_small_objects,
     label,
 )
+import os
+
+MODULE_DIRECTORY = os.path.dirname(__file__)
 
 
 def cilia_segmenter(cilia_channel):
@@ -13,9 +16,8 @@ def cilia_segmenter(cilia_channel):
     Segments the cilia channel of a lifimage. The segmenter
     is previously trained with apoc.
     """
-    segmenter = PixelClassifier(
-        opencl_filename="D:/estela/results/20240304/PixelClassifier_2.cl"
-    )
+    path = os.path.join(MODULE_DIRECTORY, "PixelClassifier.cl")
+    segmenter = PixelClassifier(opencl_filename=path)
     prediction = segmenter.predict(cilia_channel)
 
     return prediction

@@ -8,6 +8,7 @@ from skimage.morphology import (
     remove_small_objects,
     label,
     binary_opening,
+    binary_closing,
     ball,
 )
 import os

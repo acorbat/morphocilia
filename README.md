@@ -1,6 +1,32 @@
 # morphocilia
 Package for cilia segmentation and morphological description, and bile duct and canaliculi regionalization during development of liver thick sections.
 
+## Segmentation
+The [cilia_segmentation notebook](https://github.com/acorbat/morphocilia/blob/cilia_classifier/notebooks/cilia_segmentation.ipynb) shows the development of a strategy to binarise and label cilia from intrahepatic bile ducts stained with Arl13b. For the binarisation, the Napari APOC pixel classifier and some morphological parameters were used.
+The function cilia_segmenter_cleaner in the [segmenter.py module](https://github.com/acorbat/morphocilia/blob/cilia_classifier/morphocilia/segmenter.py) is in charge of binarising and labelling the cilia channel of these bile duct images.
+
+## Quantification
+Once the images are segmented, the [cilia_quantification notebook](https://github.com/acorbat/morphocilia/blob/cilia_classifier/notebooks/cilia_quantification.ipynb) uses the scikit-image regionprops function to populate a table with relevant parameters for the classification of cilia into different types.
+The cilia_props_table function from the [quantifier.py module](https://github.com/acorbat/morphocilia/blob/cilia_classifier/morphocilia/quantifier.py) is in charge of creating the aforementioned table.
+
+## Classification
+In the [cilia_classification notebook](https://github.com/acorbat/morphocilia/blob/cilia_classifier/notebooks/cilia_classification.ipynb) we developed a pipeline to classify cilia into 4 different classes: fibroblastic, looped, elongated, and uncertain. For this purpose the data was first scaled with the StandardScaler from sklearn. Then, the KNeighborsClassifier, also from sklearn, was trained with two parameters: solidity and axis_minor_length. These parameters had shown the best cilia separation in a previous pairplot.
+The scale_columns and classify_cilia functions from the [classifier.py module](https://github.com/acorbat/morphocilia/blob/cilia_classifier/morphocilia/classifier.py) can be used to scale data and classify cilia from intrahepatic bile ducts.
+
+## Region map
+The [regionmapping notebook](https://github.com/acorbat/morphocilia/blob/cilia_classifier/notebooks/regionmapping.ipynb) contains several steps for the division of portal vein niche images into different regions based on CD13 (bile canaliculi) and OPN (bile ducts) stainings.
+The first two steps consist of the segmentation of CD13+ and OPN+ regions. Otsu thresholding was applied to both stainings.
+The third step of the notebook consists of the segmentation of lumina by combining DAPI (nuclei) and Phalloidin (F-actin) staining. In this case, Li thresholding was applied.
+The last step of this notebook consists of the region mapper. This part of the notebook uses the previous CD13 and OPN segmentations to create a mask which separates the opn+, cd13+, and mixed regions.
+The [segmenter.py module](https://github.com/acorbat/morphocilia/blob/cilia_classifier/morphocilia/segmenter.py) contains segment_cd13, segment_opn, and get_region_map to create a mask with the different regions of the portal vein niche.
+
+## Mapping classified cilia
+In the [classification_regionmap notebook](https://github.com/acorbat/morphocilia/blob/cilia_classifier/notebooks/classification_regionmap.ipynb) we combined the classification of cilia with the region they are located in.
+The get_regions function from the [region_mapper.py module](https://github.com/acorbat/morphocilia/blob/cilia_classifier/morphocilia/region_mapper.py) takes the regionmap mask and returns a table with two columns: a first column indicating the region in which each cilia is located and a second one indicating whether the cilia is in one or more regions.
+
+# Cilia classification and mapping in an entire dataset
+The [cilia_mapping_all notebook](https://github.com/acorbat/morphocilia/blob/cilia_classifier/notebooks/cilia_mapping_all.ipynb) shows how to create a dataframe containing the classification of all cilia and their alocation into the different regions by iterating through all the images from an existing dataset.
+
 # Development
 
 Remember to always work in a new environment.

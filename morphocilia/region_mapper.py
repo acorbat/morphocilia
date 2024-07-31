@@ -29,7 +29,7 @@ def get_regions(labelled_img, regionmap):
 
     df = pd.DataFrame(props)
     df = df.rename(
-        columns={"intensity_max": "region", 
+        columns={"intensity_max": "region",
                  "region_set": "all_regions"}
     )
     df["region"] = df["region"].apply(parse_regions)
